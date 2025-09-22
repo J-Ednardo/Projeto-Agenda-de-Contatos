@@ -11,7 +11,6 @@ export default class Login {
 
     events() {
         if(!this.form) return;
-
         this.form.addEventListener('submit', e => {
             e.preventDefault();
             this.validate(e);
@@ -45,10 +44,6 @@ export default class Login {
         const div = document.createElement('div');
         div.innerHTML = msg;
         div.classList.add('error-text');
-        div.style.fontSize = '12px';
-        div.style.color = 'red';
-        div.style.marginTop = '5px';
-        div.style.marginLeft = '5px';
         field.insertAdjacentElement('afterend', div); 
     }
 
