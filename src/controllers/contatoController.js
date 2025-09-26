@@ -9,7 +9,7 @@ exports.index = (req, res) => {
 exports.register = async (req, res) => {
     try {
         const contato = new Contato(req.body);
-        await contato.register();
+        await contato.register(req.session.user._id);
 
         if(contato.errors.length > 0) {
             req.flash('errors', contato.errors);
@@ -31,6 +31,12 @@ exports.editIndex = async (req, res) => {
     const contato = await Contato.buscaPorId(req.params.id);
 
     if(!contato) return res.render('404');
+
+    if(contato.criadoPor.toString() !== req.session.user._id.toString()) {
+        req.flash('errors', 'Você não tem permissão para editar esse usuário');
+        req.session.save(() => res.redirect('/'));
+        return;
+    }
 
     res.render('contato', { contato });
 };

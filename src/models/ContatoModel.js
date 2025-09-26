@@ -6,7 +6,8 @@ const ContatoSchema = new mongoose.Schema({
     sobrenome: { type: String, required: false, default: '' },
     email: { type: String, required: false, default: '' },
     telefone: { type: String, required: false, default: '' },
-    criadoEm: { type: Date, default: Date.now }  
+    criadoEm: { type: Date, default: Date.now },
+    criadoPor: { type: String, required: true } 
 });
 
 const ContatoModel = mongoose.model('Contato', ContatoSchema);
@@ -18,10 +19,11 @@ class Contato {
         this.contato = null;
     }
 
-    async register() {
+    async register(userId) {
         this.valida();
-
         if(this.errors.length > 0) return;
+
+        this.body.criadoPor = userId;
         this.contato = await ContatoModel.create(this.body);
     }
 
@@ -65,8 +67,8 @@ class Contato {
         return contato;
     }
 
-    static async buscaContatos() {
-        const contatos = await ContatoModel.find().sort({ criadoEm: -1 });
+    static async buscaContatos(userId) {
+        const contatos = await ContatoModel.find({ criadoPor: userId }).sort({ criadoEm: -1 });
         return contatos;
     }
 
