@@ -66,4 +66,4 @@ Siga os passos abaixo para rodar a aplicação em seu ambiente local.
     ```
 
 5.  **Acesse a aplicação:**
-    Abra seu navegador e acesse `http://localhost:3000`.
+    Abra seu navegador e acesse `http://localhost:3001`.
